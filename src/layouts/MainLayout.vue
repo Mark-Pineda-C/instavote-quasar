@@ -4,7 +4,7 @@
       <q-toolbar>
         <q-toolbar-title shrink>
           <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
+            <img src="../assets/CIP_logo.png" />
           </q-avatar>
           <strong class="q-ml-sm">Insta Vote</strong>
         </q-toolbar-title>
@@ -19,7 +19,6 @@
           <q-route-tab to="/home" label="Inicio" />
           <q-route-tab to="/activities" label="Procesos Activos" />
           <q-route-tab to="/about" label="Sobre Nosotros" />
-          <q-route-tab to="/contact" label="Contacto" />
           <q-route-tab to="/login" icon="supervisor_account" />
         </q-tabs>
         <q-btn
@@ -50,9 +49,6 @@
         <q-item clickable to="about" active-color="secondary">
           <q-item-section>Sobre Nosotros</q-item-section>
         </q-item>
-        <q-item clickable to="contact" active-color="secondary">
-          <q-item-section>Contactanos</q-item-section>
-        </q-item>
         <q-item clickable to="/login">
           <q-item-section>Ingreso Admin</q-item-section>
         </q-item>
@@ -67,19 +63,26 @@
 <script>
 import { useQuasar } from "quasar";
 import { defineComponent, ref } from "vue";
+import { useStore } from "src/pinia/user_session";
 
 export default defineComponent({
   name: "TestLayout",
   setup() {
     const rightDrawerOpen = ref(false);
     const $q = useQuasar();
-
+    const store = useStore();
     return {
+      $q,
+      store,
       rightDrawerOpen,
       toggleRightDrawer() {
         rightDrawerOpen.value = !rightDrawerOpen.value;
       },
     };
+  },
+  created() {
+    this.$q.localStorage.clear();
+    this.store.$reset();
   },
 });
 </script>

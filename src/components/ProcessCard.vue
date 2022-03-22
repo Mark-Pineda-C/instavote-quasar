@@ -4,7 +4,9 @@
     @click="goToLogin"
   >
     <q-card-section horizontal class="q-ma-none">
-      <q-card-section class="text-h4">{{ value.InstituteName }}</q-card-section>
+      <q-card-section class="process-name">{{
+        value.InstituteName
+      }}</q-card-section>
     </q-card-section>
   </q-card>
 </template>
@@ -30,6 +32,10 @@ export default defineComponent({
     overflow: hidden
     transition: 0.25s
     cursor: pointer
+    body.screen--sm &
+      height: 120px
+    body.screen--xs &
+      height: 80px
 .process-card::before
     content: ''
     position: absolute
@@ -42,4 +48,14 @@ export default defineComponent({
     filter: contrast(80%)
 .process-card:hover::before
     background-color: var(--q-positive)
+.process-name
+  transition: 0.25s
+  font-size: 2.125rem
+  font-weight: 400
+  body.screen--sm &
+    font-size: 2.125rem
+    font-weight: 400
+  body.screen--xs &
+    font-size: 1.25rem
+    font-weight: 500
 </style>

@@ -4,9 +4,9 @@
       <q-toolbar>
         <q-toolbar-title>
           <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
+            <img src="../assets/CIP_logo.png" />
           </q-avatar>
-          Title
+          Insta Vote
         </q-toolbar-title>
       </q-toolbar>
     </q-header>

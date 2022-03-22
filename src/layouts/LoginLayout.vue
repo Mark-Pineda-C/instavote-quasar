@@ -51,11 +51,16 @@
 <script>
 import { defineComponent, ref } from "vue";
 import { api } from "boot/axios";
+import { useQuasar } from "quasar";
+import { useStore } from "../pinia/user_session";
 
 export default defineComponent({
   name: "LoginLayout",
   setup() {
+    const $q = useQuasar();
+    const store = useStore();
     return {
+      store,
       isPwd: ref(true),
       id: ref(""),
       pin: ref(""),
@@ -63,57 +68,79 @@ export default defineComponent({
   },
   methods: {
     Login() {
-      var params = new URLSearchParams();
-      params.append("id", this.id);
-      params.append("pin", this.pin);
+      var params = {};
+      params.id = this.id;
+      params.pin = this.pin;
       if (this.$route.params.id) {
-        params.append("institute", this.$route.params.id);
+        params.institute = this.$route.params.id;
       }
-      const config = {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      };
       if (!this.$route.params.id) {
-        alert("ingresando como ADMIN");
         api
-          .post("/users/validate-admin", params, config)
+          .post("/users/validate-admin", params)
           .then((response) => {
             var myData = response.data;
 
             if (myData.status === "success") {
               if (myData.role === "ADMIN") {
-                alert("Bienvenido, administrador");
-                this.$router.push("/admin/create");
+                this.store.setToken(myData.token);
+                this.store.setData(myData.message._id.toString(), myData.role);
+                this.$router.push("/admin");
               }
             } else {
-              alert(myData.status);
+              this.$q.notify({
+                progress: true,
+                message: myData.message,
+                type: "negative",
+              });
             }
           })
           .catch((err) => {
-            alert("Ocurrio un error");
+            this.$q.notify({
+              progress: true,
+              message: "Ocurrio un error en el sistema",
+              type: "negative",
+            });
             console.log(err);
           });
       } else {
         api
-          .post("/users/validate", params, config)
+          .post("/users/validate", params)
           .then((response) => {
             var myData = response.data;
             console.log(myData);
             if (myData.status === "success") {
               if (myData.role === "USER") {
-                alert("Usuario correcto");
+                this.store.setToken(myData.token);
+                this.store.setData(myData.user, myData.role);
                 this.$router.push({
                   path: `/process/${myData.message}/start`,
                 });
               }
             } else {
-              alert(myData.message);
-              alert("fail");
+              if (myData.type === 1) {
+                this.$q
+                  .dialog({
+                    title: "Alerta",
+                    message: myData.message,
+                  })
+                  .onOk(() => {
+                    this.$router.go(-1);
+                  });
+              } else {
+                this.$q.notify({
+                  progress: true,
+                  message: myData.message,
+                  type: "negative",
+                });
+              }
             }
           })
           .catch((err) => {
-            alert("Ocurrio un error");
+            this.$q.notify({
+              progress: true,
+              message: "Ocurrio un error en el sistema",
+              type: "negative",
+            });
             console.log(err);
           });
       }

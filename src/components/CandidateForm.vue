@@ -5,7 +5,7 @@
         size="sm"
         color="negative"
         icon="clear"
-        class="float-btn"
+        class="float-btn-l"
         round
         @click="this.$emit('Remove-Candidate')"
       />
@@ -13,7 +13,7 @@
         <div class="col">
           <q-input
             v-model="can.name"
-            label="Nombre del candidato"
+            label="Nombre"
             :rules="[
               (val) =>
                 (val && val.length > 0) || 'Porfavor no deje el campo vacio',
@@ -24,7 +24,7 @@
           ></q-input>
           <q-input
             v-model="can.group"
-            label="Agrepacion del Candidato"
+            label="Agrupacion"
             :rules="[
               (val) =>
                 (val && val.length > 0) || 'Porfavor no deje el campo vacio',
@@ -39,7 +39,7 @@
             <input
               type="file"
               accept="images/*"
-              class="invisible-input full-width"
+              class="invisible-input"
               @change="convertImg"
             />
             <q-avatar
@@ -58,7 +58,15 @@
               size="sm"
               color="negative"
               icon="clear"
-              class="float-btn z-top"
+              class="gt-xs float-btn-l z-top"
+              round
+              @click="removeImg"
+            />
+            <q-btn
+              size="sm"
+              color="negative"
+              icon="clear"
+              class="lt-sm float-btn-r z-top"
               round
               @click="removeImg"
             />
@@ -118,13 +126,18 @@ export default defineComponent({
 .input-icon
     pointer-events: none
     cursor: pointer
-.float-btn
+.float-btn-l
     position: absolute
     top: -10px
     left: -10px
+.float-btn-r
+    position: absolute
+    top: -10px
+    right: -10px
 .invisible-input
     position: absolute
     opacity: 0
     cursor: pointer
-    height: 100%
+    height: 75%
+    width: 45%
 </style>

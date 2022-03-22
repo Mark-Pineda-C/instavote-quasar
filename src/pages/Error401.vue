@@ -3,10 +3,10 @@
     class="fullscreen bg-primary text-white text-center q-pa-md flex flex-center"
   >
     <div>
-      <div style="font-size: 30vh" class="text-black">404</div>
+      <div style="font-size: 30vh" class="text-black">401</div>
 
       <div class="text-h2 text-black" style="opacity: 0.4">
-        Uy! Esta no es la pagina que esperabamos...
+        No tienes permiso para acceder a esta pantalla
       </div>
 
       <q-btn
@@ -14,8 +14,8 @@
         color="accent"
         text-color="white"
         unelevated
-        to="/"
-        label="Ir al inicio"
+        @click="this.$router.go(-1)"
+        label="Regresar"
         no-caps
       />
     </div>
@@ -26,6 +26,6 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "Error404",
+  name: "Error401",
 });
 </script>
