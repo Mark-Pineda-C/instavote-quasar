@@ -25,7 +25,7 @@ Tabla de contenidos
 
 # Instavote
 
-Aplicacion web del sistema _Instavote_ con el framework Quasar. Este es un sistema en el que se implementara el voto electronico como su principal función
+Aplicacion web del sistema _Instavote_ con el framework `Quasar`. Este es un sistema en el que se implementara el voto electronico como su principal función
 
 # Herramientas
 
